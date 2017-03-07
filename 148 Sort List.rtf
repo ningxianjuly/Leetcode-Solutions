@@ -1,0 +1,55 @@
+{\rtf1\ansi\ansicpg936\cocoartf1504\cocoasubrtf810
+{\fonttbl\f0\fnil\fcharset134 PingFangSC-Regular;\f1\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 // This is a recursive version, with the idea of merge sort\
+// Time: O(nlog(n)) Space(log(n))
+\f1 \
+\
+class Solution \{\
+public:\
+    ListNode* sortList(ListNode* head) \{\
+        if (head == NULL || head->next == NULL) \{\
+            return head;\
+        \}\
+        ListNode* fast = head;\
+        ListNode* slow = head;\
+        ListNode* prev = NULL;\
+        while( fast != NULL && fast->next != NULL) \{\
+            fast = fast->next->next;\
+            prev = slow;\
+            slow = slow->next;\
+        \}\
+        prev->next = NULL;\
+        ListNode* lres = sortList(head);\
+        ListNode* rres = sortList(slow);\
+        ListNode* res = Merge(lres,rres);\
+        return res;\
+    \}\
+private:\
+    ListNode* Merge(ListNode* lres, ListNode* rres) \{\
+        ListNode dummy(0);\
+        ListNode* trl = &dummy;\
+        while(lres != NULL && rres != NULL) \{\
+            if (lres->val <= rres->val) \{\
+                trl->next = lres;\
+                lres = lres->next;\
+            \} else \{\
+                trl->next = rres;\
+                rres = rres->next;\
+            \}\
+            trl = trl->next;\
+        \}\
+        if (lres != NULL) \{\
+            trl->next = lres;\
+        \}\
+        if (rres != NULL) \{\
+            trl->next = rres;\
+        \}\
+        return dummy.next;\
+        \
+    \}\
+\};}
