@@ -17,7 +17,7 @@ private:
             if (i+1 < input.size() && input[i] == input[i+1]) {
                 count++;
             } else {
-                res += to_string(count) + input[i];
+                 res += to_string(count) + input[i];
                 count = 1;
             }
         }
